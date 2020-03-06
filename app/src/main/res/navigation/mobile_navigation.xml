@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.mephiguide.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_reminder"
+        android:name="com.example.mephiguide.ui.dashboard.ReminderFragment"
+        android:label="@string/title_reminder"
+        tools:layout="@layout/fragment_reminder" />
+
+    <fragment
+        android:id="@+id/navigation_navigation"
+        android:name="com.example.mephiguide.ui.notifications.NavigationFragment"
+        android:label="@string/title_navigation"
+        tools:layout="@layout/fragment_navigation" />
+
+    <fragment
+        android:id="@+id/navigation_qr"
+        android:name="com.example.mephiguide.ui.qr.QrFragment"
+        android:label="@string/title_qr"
+        tools:layout="@layout/fragment_qr" />
+</navigation>

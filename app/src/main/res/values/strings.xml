@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Путеводитель по МИФИ</string>
+    <string name="title_home">Новости</string>
+    <string name="title_reminder">Памятка</string>
+    <string name="title_navigation">Навигация</string>
+    <string name="title_qr">QR-код</string>
+</resources>
