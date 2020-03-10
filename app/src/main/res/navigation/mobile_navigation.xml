@@ -28,4 +28,14 @@
         android:name="com.example.mephiguide.ui.qr.QrFragment"
         android:label="@string/title_qr"
         tools:layout="@layout/fragment_qr" />
+    <fragment
+        android:id="@+id/navigation_telephony"
+        android:name="com.example.mephiguide.ui.telephony.TelephonyFragment"
+        android:label="@string/title_telephony"
+        tools:layout="@layout/fragment_telephony" />
+    <fragment
+        android:id="@+id/navigation_options"
+        android:name="com.example.mephiguide.ui.options.OptionsFragment"
+        android:label="@string/title_options"
+        tools:layout="@layout/fragment_options" />
 </navigation>

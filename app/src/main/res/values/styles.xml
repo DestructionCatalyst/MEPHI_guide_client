@@ -7,5 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="InpheTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorInphe</item>
+        <item name="colorPrimaryDark">@color/colorInpheDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="LaplasTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorLaplas</item>
+        <item name="colorPrimaryDark">@color/colorLaplasDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>

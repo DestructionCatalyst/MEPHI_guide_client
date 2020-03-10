@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorInphe">#2B74C5</color>
+    <color name="colorInpheDark">#2967AC</color>
+    <color name="colorLaplas">#FF952B</color>
+    <color name="colorLaplasDark">#ED5E00</color>
+
 </resources>
