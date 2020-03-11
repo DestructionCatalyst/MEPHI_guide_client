@@ -3,9 +3,17 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorInphe">#2B74C5</color>
-    <color name="colorInpheDark">#2967AC</color>
-    <color name="colorLaplas">#FF952B</color>
-    <color name="colorLaplasDark">#ED5E00</color>
+    <color name="colorInphe">#2D7BCE</color>
+    <color name="colorInpheDark">#246099</color>
+    <color name="colorLaplas">#CE631C</color>
+    <color name="colorLaplasDark">#9E4A16</color>
+    <color name="colorIphties">#3D6999</color>
+    <color name="colorIphtiesDark">#2D4F72</color>
+    <color name="colorIcis">#7F447E</color>
+    <color name="colorIcisDark">#582F57</color>
+    <color name="colorNesphi">#B53232</color>
+    <color name="colorNesphiDark">#882528</color>
+    <color name="colorIphib">#00911F</color>
+    <color name="colorIphibDark">#005B09</color>
 
 </resources>

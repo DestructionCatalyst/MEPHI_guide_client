@@ -19,11 +19,11 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     public int selectedTheme = 0;
-    final String FILE_NAME = "theme";
+    private final String FILE_NAME = "theme";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //selectedTheme = getIntent().getIntExtra("position", 0);
+
         selectedTheme = loadTheme();
 
         selectTheme();
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectTheme(){
+
         switch (selectedTheme){
             case 0:
                 setTheme(R.style.AppTheme);
@@ -69,12 +70,35 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 setTheme(R.style.LaplasTheme);
                 break;
+            case 4:
+                setTheme(R.style.IphibTheme);
+                break;
+            case 5:
+                setTheme(R.style.NesphiTheme);
+                break;
+            case 6:
+                setTheme(R.style.IcisTheme);
+                break;
+            case 7:
+                setTheme(R.style.IphtiesTheme);
+                break;
+            case 8:
+                setTheme(R.style.IphtiesTheme);
+                break;
+            case 9:
+                setTheme(R.style.NesphiTheme);
+                break;
+            case 10:
+                setTheme(R.style.IcisTheme);
+                break;
+
             default:
                 setTheme(R.style.AppTheme);
         }
     }
 
     private int loadTheme(){
+
         String read = "";
         int res = 0;
         try {

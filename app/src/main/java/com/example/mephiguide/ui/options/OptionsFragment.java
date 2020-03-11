@@ -1,9 +1,9 @@
 package com.example.mephiguide.ui.options;
 
-import androidx.core.app.TaskStackBuilder;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.example.mephiguide.MainActivity;
 import com.example.mephiguide.R;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,11 +31,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class OptionsFragment extends Fragment {
 
-    final String FILE_NAME = "theme";
+    private final String FILE_NAME = "theme";
 
-    String s [] = new String[4];
-
-    Spinner spinner;
+    private Spinner spinner;
 
 
     private OptionsViewModel mViewModel;
@@ -50,28 +47,87 @@ public class OptionsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_options, container, false);
 
-        spinner = root.findViewById(R.id.spinner);
+        spinner = root.findViewById(R.id.options_spinner);
         initializeSpinner(((MainActivity)this.getActivity()).selectedTheme);
 
-        final TextView about = root.findViewById(R.id.about);
-        about.setText(getString(R.string.lorem_ipsum)+getString(R.string.lorem_ipsum));
+        final TextView support = root.findViewById(R.id.options_support);
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMail();
+            }
+        });
+
+        final TextView about = root.findViewById(R.id.options_about);
+        about.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                showMessage();
+            }
+        });
+
 
         return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(OptionsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(OptionsViewModel.class); //ViewModelProviders.of(this).get(OptionsViewModel.class);
         // TODO: Use the ViewModel
     }
 
+    private void showMessage(){
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setMessage("Приложение «Путеводитель по НИЯУ МИФИ»\n" +
+                "Версия " +getString(R.string.app_version)+"\n\n"+
+                "©\n" +
+                "Национальный исследовательский ядерный университет «МИФИ»,\n" +
+                "Институт Интеллектуальных Кибернетических Систем (ИИКС)\n" +
+                "Кафедра №22 «Кибернетика»\n" +
+                "Разработано в рамках курса «Проектная практика»\n" +
+                "Руководитель проекта: Немешаев Сергей Александрович\n" +
+                "Куратор проекта: Дадтеев Казбек Маирбекович\n" +
+                "Разработчик: Комза Владислав Петрович")
+                .setTitle("О программе")
+                .setPositiveButton("OK", null);
+        AlertDialog dialog1 = builder1.create();
+        dialog1.show();
+    }
+
+    private void openMail(){
+
+        try
+        {
+            Intent contactintent = new Intent(Intent.ACTION_SENDTO);
+            contactintent.setData(android.net.Uri.parse("mailto:" + "mephiapp@gmail.com"));
+
+            startActivity(contactintent);
+
+        }
+        catch (ActivityNotFoundException anfe)
+        {
+            Toast.makeText(this.getActivity(), "На устройстве не найден почтовый клиент", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void initializeSpinner(int theme){
+
+        String [] s = new String[11];
         s[0] = "Автоматически";
         s[1] = "Стандартная";
         s[2] = "ИЯФиТ";
         s[3] = "ЛаПлаз";
-
+        s[4] = "ИФИБ";
+        s[5] = "ИНТЕЛ";
+        s[6] = "ИИКС";
+        s[7] = "ИФТИС";
+        s[8] = "ИФТЭБ";
+        s[9] = "ИМО";
+        s[10] = "ФБИУКС";
 
         ArrayAdapter <String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, s);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -86,7 +142,6 @@ public class OptionsFragment extends Fragment {
                     getActivity().finish();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     saveTheme(position);
-                    //intent.putExtra("position", position);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -101,7 +156,7 @@ public class OptionsFragment extends Fragment {
         spinner.setOnItemSelectedListener(itemSelectedListener);
     }
 
-    void saveTheme(int theme){
+    private void saveTheme(int theme){
 
         FileOutputStream fos;
 
