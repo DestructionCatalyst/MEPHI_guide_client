@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IOpensJson {
 
-    void open(String content);
+    void open(String jsonStr);
     void connFailed(String swearing);
     void displayJson(ArrayList a);
 

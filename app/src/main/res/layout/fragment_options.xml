@@ -10,7 +10,7 @@
 
 
     <LinearLayout
-        android:id="@+id/options_lane1"
+        android:id="@+id/options_line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -55,7 +55,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/options_lane1" />
+        app:layout_constraintTop_toBottomOf="@+id/options_line1" />
 
     <TextView
         android:id="@+id/options_support"

@@ -1,8 +1,8 @@
 package com.example.mephiguide.data_types;
 
 public class News {
-    int id,institution,idPlace;
-    String name,t,text,place;
+    public int id,institution,idPlace;
+    public String name,t,text,place;
     byte[]top_img;
     public News(int id, int institution, int idPlace, String name, String t, String text, String place){
         this.id = id;
