@@ -3,6 +3,8 @@ package com.example.mephiguide;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,9 +13,13 @@ import java.net.URL;
 
 public class NetworkTask extends AsyncTask<String, Void, String> {
     IOpensJson context;
+    MutableLiveData target;
+    JSONStrategy strat;
 
-    public NetworkTask(IOpensJson context){
+    public NetworkTask(IOpensJson context, MutableLiveData target, JSONStrategy strat){
         this.context = context;
+        this.target = target;
+        this.strat = strat;
     }
 
     @Override
@@ -74,6 +80,8 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
         if (content.startsWith("[")){
             //Открываем
             Log.d("Connection","Got JSON from the server");
+            JSONHelper helper1 = new JSONHelper(context, strat, target);
+            helper1.execute(content);
             context.open(content);
         }
         else{

@@ -14,6 +14,7 @@ public class GroupsJSONHelper implements JSONStrategy {
         try{
             Gson gson = new Gson();
             groups = new ArrayList<>(Arrays.asList(gson.fromJson(jsonString, Group[].class)));
+            groups.add(0,(new Group(0,"(Гость)",0)));
             return groups;
         }
         catch (Exception ex){

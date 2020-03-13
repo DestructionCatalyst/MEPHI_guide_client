@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.mephiguide.data_types.Group;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,8 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     public int selectedTheme = 0;
-    private final String FILE_NAME = "theme";
+    private final String FILE_NAME_THEMES = "theme";
+    private final String FILE_NAME_GROUP = "group";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         String read = "";
         int res = 0;
         try {
-            FileInputStream fin = this.openFileInput(FILE_NAME);
+            FileInputStream fin = this.openFileInput(FILE_NAME_THEMES);
             byte [] b = new byte[fin.available()];
             fin.read(b);
             read = new String (b);
@@ -120,4 +122,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return res;
     }
+
+
 }

@@ -5,48 +5,55 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mephiguide.IOpensJson;
-import com.example.mephiguide.JSONHelper;
+import com.example.mephiguide.JSONHelpers.GroupsJSONHelper;
 import com.example.mephiguide.JSONHelpers.NewsJSONHelper;
 import com.example.mephiguide.NetworkTask;
-import com.example.mephiguide.R;
+import com.example.mephiguide.ValueKeeper;
+import com.example.mephiguide.data_types.Group;
 import com.example.mephiguide.data_types.News;
 
 import java.util.ArrayList;
 
 public class HomeViewModel extends ViewModel implements IOpensJson {
 
-    public final String lnkbase="http://194.87.232.95:45555/home/";
-    private final String lnkpost = "getnews?inst=";
+    private final String lnkpostNews = "getnews?inst=";
+    private final String lnkpostGroups = "getgroups/";
 
-    private MutableLiveData<String> mText;
-    private MutableLiveData<ArrayList<News>> listData;
+    private MutableLiveData<ArrayList<News>> newsArrayList;
+    private MutableLiveData<ArrayList<Group>> groupArrayList;
 
     public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
-        listData = new MutableLiveData<>();
-        update();
-    }
 
-    public LiveData<String> getText() {
-        return mText;
+        newsArrayList = new MutableLiveData<>();
+        groupArrayList = new MutableLiveData<>();
+        updateNews(0);
+        updateGroups();
     }
 
     public LiveData<ArrayList<News>> getNews() {
-        return listData;
+        return newsArrayList;
     }
 
-    public void update(){
+    public LiveData<ArrayList<Group>> getGroups(){
+        return groupArrayList;
+    }
 
-        NetworkTask task = new NetworkTask(this);
-        task.execute(lnkbase+lnkpost+"0");
+    public void updateNews(int group){
+
+        NetworkTask task = new NetworkTask(this, newsArrayList, new NewsJSONHelper());
+        task.execute(ValueKeeper.getInstance().lnkbase + lnkpostNews + group);
+
+    }
+
+    public void updateGroups(){
+
+        NetworkTask task1 = new NetworkTask(this, groupArrayList, new GroupsJSONHelper());
+        task1.execute(ValueKeeper.getInstance().lnkbase + lnkpostGroups);
     }
 
     @Override
     public void open(String jsonStr) {
 
-        JSONHelper helper1 = new JSONHelper(this, new NewsJSONHelper());
-        helper1.execute(jsonStr);
     }
 
     @Override
@@ -57,13 +64,5 @@ public class HomeViewModel extends ViewModel implements IOpensJson {
     @Override
     public void displayJson(ArrayList a) {
 
-        Object tmp;
-
-        for (int i = 0; i<a.size()/2; i++){//Перевернуть массив новостей, чтобы сначала были новые
-            tmp = a.get(i);
-            a.set(i, a.get(a.size()-1-i));
-            a.set(a.size()-1-i, tmp);
-        }
-        listData.setValue(a);
     }
 }
