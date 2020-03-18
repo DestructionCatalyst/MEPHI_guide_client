@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.MainActivity;
 import com.example.mephiguide.R;
 
@@ -139,12 +140,9 @@ public class OptionsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != ((MainActivity)getActivity()).selectedTheme) {
 
-                    getActivity().finish();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     saveTheme(position);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                    ((MainActivity) getActivity()).reset();
+
                 }
             }
 
@@ -158,19 +156,9 @@ public class OptionsFragment extends Fragment {
 
     private void saveTheme(int theme){
 
-        FileOutputStream fos;
+        FileHelper fhelp = new FileHelper(this.getActivity());
+        fhelp.writeFile(FILE_NAME, ""+theme);
 
-        try {
-            fos = getActivity().openFileOutput(FILE_NAME, MODE_PRIVATE);
-            String write = ""+theme;
-            fos.write(write.getBytes());
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getActivity(), "Ошибка сохранения данных!", Toast.LENGTH_SHORT).show();
-        }
     }
 
 }

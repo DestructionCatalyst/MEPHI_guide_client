@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:textAlignment="gravity"
                 android:layout_marginRight="10dp"
                 android:layout_weight="2"
                 android:text=""
@@ -41,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:layout_gravity="right"
-
+                android:textAlignment="gravity"
                 android:text=""
                 android:textSize="16sp">
             </TextView>

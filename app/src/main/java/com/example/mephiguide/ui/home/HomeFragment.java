@@ -12,31 +12,25 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mephiguide.FileHelper;
+import com.example.mephiguide.MainActivity;
 import com.example.mephiguide.R;
 import com.example.mephiguide.ValueKeeper;
 import com.example.mephiguide.data_types.Group;
 import com.example.mephiguide.data_types.News;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
 
-    private final String FILE_NAME = "group";
+    private final String FILE_NAME_GROUP = "group";
+    private final String FILE_NAME_AUTO = "autotheme";
     private HomeViewModel homeViewModel;
 
     private ListView listView;
@@ -75,9 +69,13 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                boolean reset = false;
+                if (((Group)parent.getItemAtPosition(position)).id != ValueKeeper.getInstance().curGroup.id)
+                    reset = true;
                 ValueKeeper.getInstance().curGroup = (Group)parent.getItemAtPosition(position);
                 Log.d("Mics", ValueKeeper.getInstance().curGroup.name);
                 changeGroup();
+                if (reset) ((MainActivity)getActivity()).reset();
             }
 
             @Override
@@ -115,29 +113,19 @@ public class HomeFragment extends Fragment {
     }
 
     void changeGroup(){
-        FileOutputStream fos;
-        //TODO Вынести в отдельный класс, лучше  - тред
-        try {
-            fos = this.getActivity().openFileOutput(FILE_NAME, MODE_PRIVATE);
-            String write = "";
-            write = ValueKeeper.getInstance().curGroup.name;
-            fos.write(write.getBytes());
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this.getActivity(), "Ошибка сохранения данных!", Toast.LENGTH_SHORT).show();
-        }
+
+        FileHelper fhelp = new FileHelper(this.getActivity());
+        fhelp.writeFile(FILE_NAME_GROUP, "" + ValueKeeper.getInstance().curGroup.id);
+        fhelp.writeFile(FILE_NAME_AUTO, ""+ValueKeeper.getInstance().curGroup.idInst);
+
         if (ValueKeeper.getInstance().curGroup.idInst == 0){
             sw.setChecked(false);
             sw.setVisibility(View.INVISIBLE);
             textView.setVisibility(View.INVISIBLE);
         }
         else {
-            //listView.setVisibility(View.INVISIBLE);
+
             refresh(sw.isChecked());
-            listView.setVisibility(View.VISIBLE);
             sw.setVisibility(View.VISIBLE);
             textView.setVisibility(View.VISIBLE);
         }
@@ -152,93 +140,21 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private  void readFile(){
-        //TODO move to different file/thread
-        String read = "";
-        boolean flag = false, found = false;
-        try {
-            FileInputStream fin = this.getActivity().openFileInput(FILE_NAME);
-            byte [] b = new byte[fin.available()];
-            fin.read(b);
-            read = new String (b);
-            fin.close();
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            flag = true;
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        if ((flag)||(read.equals(""))||(read.equals("(Гость)"))){//Если файла нет, он пуст или там гость, то у нас гость
+    private void readFile(){
+
+        FileHelper fhelp = new FileHelper(this.getActivity());
+        String toRead = fhelp.readFile(FILE_NAME_GROUP);
+        if ((toRead.equals(""))||(toRead.equals("0"))){//Если файла нет, он пуст или там гость, то у нас гость
             ValueKeeper.getInstance().curGroup = new Group(0,"(Гость)",0);
         }
         else {
-            int tmp = Collections.binarySearch(groups, new Group(0, read, 0), new Comparator<Group>() {
-
-                /**
-                 * Compares its two arguments for order.  Returns a negative integer,
-                 * zero, or a positive integer as the first argument is less than, equal
-                 * to, or greater than the second.<p>
-                 * <p>
-                 * In the foregoing description, the notation
-                 * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
-                 * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
-                 * <tt>0</tt>, or <tt>1</tt> according to whether the value of
-                 * <i>expression</i> is negative, zero or positive.<p>
-                 * <p>
-                 * The implementor must ensure that <tt>sgn(compare(x, y)) ==
-                 * -sgn(compare(y, x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
-                 * implies that <tt>compare(x, y)</tt> must throw an exception if and only
-                 * if <tt>compare(y, x)</tt> throws an exception.)<p>
-                 * <p>
-                 * The implementor must also ensure that the relation is transitive:
-                 * <tt>((compare(x, y)&gt;0) &amp;&amp; (compare(y, z)&gt;0))</tt> implies
-                 * <tt>compare(x, z)&gt;0</tt>.<p>
-                 * <p>
-                 * Finally, the implementor must ensure that <tt>compare(x, y)==0</tt>
-                 * implies that <tt>sgn(compare(x, z))==sgn(compare(y, z))</tt> for all
-                 * <tt>z</tt>.<p>
-                 * <p>
-                 * It is generally the case, but <i>not</i> strictly required that
-                 * <tt>(compare(x, y)==0) == (x.equals(y))</tt>.  Generally speaking,
-                 * any comparator that violates this condition should clearly indicate
-                 * this fact.  The recommended language is "Note: this comparator
-                 * imposes orderings that are inconsistent with equals."
-                 *
-                 * @param o1 the first object to be compared.
-                 * @param o2 the second object to be compared.
-                 * @return a negative integer, zero, or a positive integer as the
-                 * first argument is less than, equal to, or greater than the
-                 * second.
-                 * @throws NullPointerException if an argument is null and this
-                 *                              comparator does not permit null arguments
-                 * @throws ClassCastException   if the arguments' types prevent them from
-                 *                              being compared by this comparator.
-                 */
-                @Override
-                public int compare(Group o1, Group o2) {
-                    if (o1.name.equals(o2.name)) {
-                        return 0;
-                    }
-                    else return 1;
-                }
-            });
-            if (tmp < 0){
-                ValueKeeper.getInstance().curGroup = new Group(0, "(Гость)", 0);
-            }
-            else {
+            try {
+                int tmp = Integer.parseInt(toRead);
                 ValueKeeper.getInstance().curGroup = groups.get(tmp);
             }
-            /*
-            for (Group tmp: groups) {
-                if (tmp.name.equalsIgnoreCase(read)) {
-                    curGroup = tmp;
-                    found = true;
-                }
+            catch (NumberFormatException e){
+                ValueKeeper.getInstance().curGroup = new Group(0,"(Гость)",0);
             }
-            if (!found){curGroup = new group(0,"(Гость)",0);}
-            */
 
         }
     }

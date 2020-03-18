@@ -1,10 +1,10 @@
 package com.example.mephiguide;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.mephiguide.data_types.Group;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,15 +13,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
 
     public int selectedTheme = 0;
     private final String FILE_NAME_THEMES = "theme";
-    private final String FILE_NAME_GROUP = "group";
+    private final String FILE_NAME_AUTO = "autotheme";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+
+
     }
 
     @Override
@@ -58,8 +56,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectTheme(){
+        int th = selectedTheme;
+        if (th == 0){
+            th = readGroup() + 1;
+        }
 
-        switch (selectedTheme){
+        switch (th){
             case 0:
                 setTheme(R.style.AppTheme);
                 break;
@@ -101,26 +103,42 @@ public class MainActivity extends AppCompatActivity {
 
     private int loadTheme(){
 
-        String read = "";
+        FileHelper fhelp = new FileHelper(this);
+        String read = fhelp.readFile(FILE_NAME_THEMES);
         int res = 0;
+
         try {
-            FileInputStream fin = this.openFileInput(FILE_NAME_THEMES);
-            byte [] b = new byte[fin.available()];
-            fin.read(b);
-            read = new String (b);
             res = Integer.parseInt(read);
-            fin.close();
         }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (NumberFormatException e) {
+        catch (NumberFormatException e){
             e.printStackTrace();
         }
         return res;
+
+    }
+
+    private int readGroup(){
+
+        FileHelper fhelp = new FileHelper(this);
+        String toRead = fhelp.readFile(FILE_NAME_AUTO);
+
+        int res = 0;
+
+        try {
+            res = Integer.parseInt(toRead);
+        }
+        catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public void reset(){
+        this.finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 
