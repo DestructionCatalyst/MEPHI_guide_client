@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.mephiguide.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_html"
+            app:destination="@id/navigation_html" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_reminder"
@@ -38,4 +42,18 @@
         android:name="com.example.mephiguide.ui.options.OptionsFragment"
         android:label="@string/title_options"
         tools:layout="@layout/fragment_options" />
+    <fragment
+        android:id="@+id/navigation_html"
+        android:name="com.example.mephiguide.ui.html.HtmlFragment"
+        android:label="Подробности"
+        tools:layout="@layout/fragment_html" >
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="Информация" />
+        <argument
+            android:name="data"
+            app:argType="string"
+            android:defaultValue=" " />
+    </fragment>
 </navigation>

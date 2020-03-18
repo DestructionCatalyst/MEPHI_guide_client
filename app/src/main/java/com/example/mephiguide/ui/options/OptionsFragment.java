@@ -1,16 +1,9 @@
 package com.example.mephiguide.ui.options;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,24 +13,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.MainActivity;
 import com.example.mephiguide.R;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class OptionsFragment extends Fragment {
 
     private final String FILE_NAME = "theme";
 
     private Spinner spinner;
-
-
-    private OptionsViewModel mViewModel;
 
     public static OptionsFragment newInstance() {
         return new OptionsFragment();
@@ -76,8 +64,7 @@ public class OptionsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(OptionsViewModel.class); //ViewModelProviders.of(this).get(OptionsViewModel.class);
-        // TODO: Use the ViewModel
+
     }
 
     private void showMessage(){

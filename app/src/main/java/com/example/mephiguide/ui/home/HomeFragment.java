@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment {
 
     private final String FILE_NAME_GROUP = "group";
     private final String FILE_NAME_AUTO = "autotheme";
+    private final String FILE_NAME_CHECK = "checked";
     private HomeViewModel homeViewModel;
 
     private ListView listView;
@@ -84,10 +85,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        sw.setChecked(loadChecked());
         sw.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                saveChecked(isChecked);
                 if (sw.getVisibility() == View.VISIBLE) {//If it is visible, then not a 'guest' is selected
                     refresh(isChecked);
                 }
@@ -157,5 +160,20 @@ public class HomeFragment extends Fragment {
             }
 
         }
+    }
+
+    void saveChecked(boolean checked){
+        String toWrite = checked ? "true" : "false";
+        FileHelper fhelp = new FileHelper(this.getActivity());
+        fhelp.writeFile(FILE_NAME_CHECK, toWrite);
+    }
+
+    boolean loadChecked(){
+        FileHelper fhelp = new FileHelper(this.getActivity());
+        String tmp = fhelp.readFile(FILE_NAME_CHECK);
+        if (tmp.equals("true"))
+            return true;
+        else
+            return false;
     }
 }

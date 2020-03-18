@@ -1,12 +1,15 @@
 package com.example.mephiguide.ui.home;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.navigation.Navigation;
 
 import com.example.mephiguide.R;
 import com.example.mephiguide.data_types.News;
@@ -50,23 +53,30 @@ public class MyAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // используем созданные, но не используемые view
-        View view = convertView;
+         View view = convertView;
         if (view == null) {
             view = lInflater.inflate(R.layout.newsitem, parent, false);
         }
 
-        News pnews = getNews(position);
+
+        final News pnews = getNews(position);
 
 
         ((TextView) view.findViewById(R.id.tvName)).setText(pnews.name);
         ((TextView) view.findViewById(R.id.tvTime)).setText(pnews.t);
         ((TextView) view.findViewById(R.id.tvPlace)).setText(pnews.place);
 
+        final View finalView = view;
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //fragment.ReplaceMeDaddy(getNews(position));
-                //TODO Implement navigation
+
+                Bundle bundle = new Bundle();
+                bundle.putString("title", "Новость");
+                bundle.putString("data", fragment.getString(R.string.web_start) + "<h4><br>" +
+                        pnews.name + "</h4><br>" + pnews.text + "<br>Место: " + pnews.place +
+                        "<br>Время: " + pnews.t + fragment.getString(R.string.web_end));
+                Navigation.findNavController(finalView).navigate(R.id.action_navigation_home_to_navigation_html, bundle);
             }
         });
 
