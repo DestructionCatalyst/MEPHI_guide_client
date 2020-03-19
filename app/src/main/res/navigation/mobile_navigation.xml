@@ -17,13 +17,17 @@
 
     <fragment
         android:id="@+id/navigation_reminder"
-        android:name="com.example.mephiguide.ui.dashboard.ReminderFragment"
+        android:name="com.example.mephiguide.ui.reminder.ReminderFragment"
         android:label="@string/title_reminder"
-        tools:layout="@layout/fragment_reminder" />
+        tools:layout="@layout/fragment_reminder" >
+        <action
+            android:id="@+id/action_navigation_reminder_to_navigation_html"
+            app:destination="@id/navigation_html" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_navigation"
-        android:name="com.example.mephiguide.ui.notifications.NavigationFragment"
+        android:name="com.example.mephiguide.ui.navigation.NavigationFragment"
         android:label="@string/title_navigation"
         tools:layout="@layout/fragment_navigation" />
 

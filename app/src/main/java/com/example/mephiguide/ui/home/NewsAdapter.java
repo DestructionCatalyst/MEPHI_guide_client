@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.navigation.Navigation;
@@ -16,14 +15,13 @@ import com.example.mephiguide.data_types.News;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends BaseAdapter {
+public class NewsAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
     ArrayList<News> objects;
-    CheckBox cbBuy;
     HomeFragment fragment;
 
-    MyAdapter(Context context, HomeFragment frag, ArrayList<News> products) {
+    NewsAdapter(Context context, HomeFragment frag, ArrayList<News> products) {
         ctx = context;
         objects = products;
         fragment = frag;
@@ -62,9 +60,9 @@ public class MyAdapter extends BaseAdapter {
         final News pnews = getNews(position);
 
 
-        ((TextView) view.findViewById(R.id.tvName)).setText(pnews.name);
-        ((TextView) view.findViewById(R.id.tvTime)).setText(pnews.t);
-        ((TextView) view.findViewById(R.id.tvPlace)).setText(pnews.place);
+        ((TextView) view.findViewById(R.id.tvName)).setText(pnews.getName());
+        ((TextView) view.findViewById(R.id.tvTime)).setText(pnews.getT());
+        ((TextView) view.findViewById(R.id.tvPlace)).setText(pnews.getPlace());
 
         final View finalView = view;
         view.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +71,10 @@ public class MyAdapter extends BaseAdapter {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("title", "Новость");
-                bundle.putString("data", fragment.getString(R.string.web_start) + "<h4><br>" +
-                        pnews.name + "</h4><br>" + pnews.text + "<br>Место: " + pnews.place +
-                        "<br>Время: " + pnews.t + fragment.getString(R.string.web_end));
+                bundle.putString("data", fragment.getString(R.string.web_start)
+                        + "<h4><br>" + pnews.getName() + "</h4><br>" + pnews.getText() +
+                        "<br>Место: " + pnews.getPlace() + "<br>Время: " + pnews.getT() +
+                        fragment.getString(R.string.web_end));
                 Navigation.findNavController(finalView).navigate(R.id.action_navigation_home_to_navigation_html, bundle);
             }
         });

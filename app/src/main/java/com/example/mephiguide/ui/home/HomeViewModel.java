@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mephiguide.IOpensJson;
 import com.example.mephiguide.JSONHelpers.GroupsJSONHelper;
 import com.example.mephiguide.JSONHelpers.NewsJSONHelper;
 import com.example.mephiguide.NetworkTask;
@@ -14,7 +13,7 @@ import com.example.mephiguide.data_types.News;
 
 import java.util.ArrayList;
 
-public class HomeViewModel extends ViewModel implements IOpensJson {
+public class HomeViewModel extends ViewModel {
 
     private final String lnkpostNews = "getnews?inst=";
     private final String lnkpostGroups = "getgroups/";
@@ -40,29 +39,15 @@ public class HomeViewModel extends ViewModel implements IOpensJson {
 
     public void updateNews(int group){
 
-        NetworkTask task = new NetworkTask(this, newsArrayList, new NewsJSONHelper());
+        NetworkTask task = new NetworkTask(newsArrayList, new NewsJSONHelper());
         task.execute(ValueKeeper.getInstance().lnkbase + lnkpostNews + group);
 
     }
 
     public void updateGroups(){
 
-        NetworkTask task1 = new NetworkTask(this, groupArrayList, new GroupsJSONHelper());
+        NetworkTask task1 = new NetworkTask(groupArrayList, new GroupsJSONHelper());
         task1.execute(ValueKeeper.getInstance().lnkbase + lnkpostGroups);
     }
 
-    @Override
-    public void open(String jsonStr) {
-
-    }
-
-    @Override
-    public void connFailed(String swearing) {
-
-    }
-
-    @Override
-    public void displayJson(ArrayList a) {
-
-    }
 }

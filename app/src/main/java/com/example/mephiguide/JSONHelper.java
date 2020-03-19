@@ -1,20 +1,18 @@
 package com.example.mephiguide;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class JSONHelper extends AsyncTask <String,Void,ArrayList>{
-    private JSONStrategy jsonStrat;
-    private IOpensJson context;
-    MutableLiveData target;
 
-    public JSONHelper(IOpensJson context, JSONStrategy strat, MutableLiveData target){
-        this.context = context;
+    private JSONStrategy jsonStrat;
+    MutableLiveData target;//Making private phucks up everything? needs testing
+
+    public JSONHelper(JSONStrategy strat, MutableLiveData target){
         this.jsonStrat = strat;
         this.target = target;
     }
@@ -25,8 +23,8 @@ public class JSONHelper extends AsyncTask <String,Void,ArrayList>{
     }
     @Override
     protected void onPostExecute(ArrayList content) {
-        if (context!=null){
-
+        if (content!=null){
+            Log.d("Connection","Parsed JSON: "+content.get(0).toString());
             target.postValue(content);
         }
 

@@ -73,9 +73,20 @@ public class Reminder {
         this.to = to;
     }
 
+    public boolean isChecked(){
+        return check;
+    }
+
+    public void setChecked(boolean check){
+        this.check = check;
+    }
 
     @Override
     public  String toString(){
         return name;
+    }
+
+    public int getID() {
+        return id;
     }
 }

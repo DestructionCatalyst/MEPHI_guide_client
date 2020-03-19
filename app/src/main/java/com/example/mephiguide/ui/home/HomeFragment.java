@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
     }
 
     void setNewsAdapter(ArrayList<News> news){
-        MyAdapter newsAdapter = new MyAdapter(this.getActivity(), this, news);
+        NewsAdapter newsAdapter = new NewsAdapter(this.getActivity(), this, news);
         listView.setAdapter(newsAdapter);
     }
 

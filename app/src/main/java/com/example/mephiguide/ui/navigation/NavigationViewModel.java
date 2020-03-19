@@ -1,4 +1,4 @@
-package com.example.mephiguide.ui.notifications;
+package com.example.mephiguide.ui.navigation;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +10,7 @@ public class NavigationViewModel extends ViewModel {
 
     public NavigationViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is navigation fragment");
     }
 
     public LiveData<String> getText() {

@@ -12,12 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class NetworkTask extends AsyncTask<String, Void, String> {
-    IOpensJson context;
+
     MutableLiveData target;
     JSONStrategy strat;
 
-    public NetworkTask(IOpensJson context, MutableLiveData target, JSONStrategy strat){
-        this.context = context;
+    public NetworkTask(MutableLiveData target, JSONStrategy strat){
+
         this.target = target;
         this.strat = strat;
     }
@@ -76,18 +76,18 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String content) {
-        super.onPreExecute();
+        super.onPostExecute(content);
         if (content.startsWith("[")){
             //Открываем
-            Log.d("Connection","Got JSON from the server");
-            JSONHelper helper1 = new JSONHelper(context, strat, target);
+            Log.d("Connection","Got JSON from the server: "+content);
+            JSONHelper helper1 = new JSONHelper(strat, target);
             helper1.execute(content);
-            context.open(content);
+            //context.open(content);
         }
         else{
             //Ругаемся
             Log.d("Connection","Error getting JSON from the server");
-            context.connFailed(content);
+            //context.connFailed(content);
         }
 
     }
