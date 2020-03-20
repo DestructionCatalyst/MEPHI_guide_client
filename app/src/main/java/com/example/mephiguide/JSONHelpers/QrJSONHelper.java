@@ -13,7 +13,6 @@ public class QrJSONHelper implements JSONStrategy {
         ArrayList<Qr> qrs;
 
         try{
-
             Gson gson = new Gson();
             qrs = new ArrayList<>(Arrays.asList(gson.fromJson(jsonString, Qr[].class)));
             if (qrs.isEmpty()){return null;}

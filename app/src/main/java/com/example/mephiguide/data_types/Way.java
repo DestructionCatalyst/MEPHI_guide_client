@@ -1,8 +1,8 @@
 package com.example.mephiguide.data_types;
 
 public class Way {
-    int id, idStart, idEnd;
-    double len;
+    private int id, idStart, idEnd;
+    private double len;
 
     public Way(int id, int idStart, int idEnd, double len){
         this.id = id;

@@ -2,45 +2,45 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
     <style name="InpheTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorInphe</item>
         <item name="colorPrimaryDark">@color/colorInpheDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
     <style name="LaplasTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorLaplas</item>
         <item name="colorPrimaryDark">@color/colorLaplasDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
     <style name="IphtiesTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorIphties</item>
         <item name="colorPrimaryDark">@color/colorIphtiesDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
     <style name="IcisTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorIcis</item>
         <item name="colorPrimaryDark">@color/colorIcisDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
     <style name="NesphiTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorNesphi</item>
         <item name="colorPrimaryDark">@color/colorNesphiDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
     <style name="IphibTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorIphib</item>
         <item name="colorPrimaryDark">@color/colorIphibDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
 </resources>

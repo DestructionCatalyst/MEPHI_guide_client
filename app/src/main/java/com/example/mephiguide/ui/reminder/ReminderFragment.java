@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.R;
 import com.example.mephiguide.data_types.Reminder;
+import com.example.mephiguide.ui.LoadErrorMessage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +29,8 @@ public class ReminderFragment extends Fragment {
     private ReminderViewModel reminderViewModel;
 
     private ListView listView;
-    Switch sw;
+    private Switch sw;
+    private LoadErrorMessage lem;
 
     private ArrayList<Reminder> reminders;
 
@@ -42,13 +44,19 @@ public class ReminderFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList rems) {
 
-                reminders = rems;
-                setRemindersAdapter();
-                loadReminders();
+                if(rems != null) {
+                    reminders = rems;
+                    setRemindersAdapter();
+                    loadReminders();
+                    lem.changeStatus(LoadErrorMessage.LOAD_FINISHED);
+                }
+                else
+                    lem.changeStatus(LoadErrorMessage.LOAD_ERROR);
             }
         });
 
         listView = root.findViewById(R.id.reminder_listView);
+
         sw = root.findViewById(R.id.reminder_switch);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -57,10 +65,14 @@ public class ReminderFragment extends Fragment {
             }
         });
 
+        lem = root.findViewById(R.id.reminder_lem);
+        lem.changeStatus(LoadErrorMessage.LOAD_PROGRESS);
+
         return root;
     }
 
     void setRemindersAdapter(){
+
         ArrayList show;
         if (sw.isChecked()) {
             show = new ArrayList<Reminder>();
@@ -85,7 +97,7 @@ public class ReminderFragment extends Fragment {
         fhelp.writeFile(FILE_NAME_REMINDERS, write.toString());
     }
 
-    void loadReminders(){
+    private void loadReminders(){
 
         FileHelper fhelp = new FileHelper(this.getActivity());
         String [] tmp= fhelp.readFile(FILE_NAME_REMINDERS).split("~");
@@ -105,4 +117,9 @@ public class ReminderFragment extends Fragment {
         }
 
     }
+
+    public boolean getSwitchChecked(){
+        return sw.isChecked();
+    }
+
 }

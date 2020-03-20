@@ -52,10 +52,6 @@
         android:label="Подробности"
         tools:layout="@layout/fragment_html" >
         <argument
-            android:name="title"
-            app:argType="string"
-            android:defaultValue="Информация" />
-        <argument
             android:name="data"
             app:argType="string"
             android:defaultValue=" " />

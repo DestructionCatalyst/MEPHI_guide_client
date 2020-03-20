@@ -2,11 +2,11 @@ package com.example.mephiguide.data_types;
 import java.util.Date;
 
 public class Reminder {
-    String name,text,place;
-    String from,to;
-    int id, idPlace;
-    Date fromD, toD;
-    boolean check;
+    private String name,text,place;
+    private String from,to;
+    private int id, idPlace;
+    private Date fromD, toD;
+    private boolean check;
     public Reminder(int id, String name, String from, String to, String place, String text, int IDPlace){
         this.id = id;
         this.name = name;

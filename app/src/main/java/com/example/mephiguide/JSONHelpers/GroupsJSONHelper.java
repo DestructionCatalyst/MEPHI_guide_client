@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GroupsJSONHelper implements JSONStrategy {
+
     public ArrayList<Group> importFromJSON(String jsonString) {
 
         ArrayList<Group> groups;

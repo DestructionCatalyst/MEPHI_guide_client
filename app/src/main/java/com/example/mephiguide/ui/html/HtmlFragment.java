@@ -17,18 +17,15 @@ public class HtmlFragment extends Fragment {
 
     private WebView webView;
 
-    public static HtmlFragment newInstance() {
-        return new HtmlFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_html, container, false);
+
         webView = root.findViewById(R.id.html_webview);
         webView.loadData(getArguments().getString("data"), "text/html; charset=utf-8", "utf-8");
-        return root;
 
+        return root;
     }
 
     @Override

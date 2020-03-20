@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_all"
+            android:text="@string/text_news_all"
             android:textAlignment="viewEnd"
             android:textColor="@android:color/secondary_text_light" />
 
@@ -38,9 +38,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:text="@string/text_forme"
+            android:text="@string/text_news_forme"
             android:textColor="@android:color/secondary_text_light" />
     </LinearLayout>
+
+    <com.example.mephiguide.ui.LoadErrorMessage
+        android:id="@+id/home_lem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/home_listView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_line1" />
 
     <ListView
         android:id="@+id/home_listView"
@@ -50,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_line1">
+        app:layout_constraintTop_toBottomOf="@id/home_lem">
 
     </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>

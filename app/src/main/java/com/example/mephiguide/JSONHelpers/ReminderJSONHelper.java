@@ -9,8 +9,6 @@ import java.util.Arrays;
 
 public class ReminderJSONHelper implements JSONStrategy {
 
-
-
     public ArrayList<Reminder> importFromJSON(String jsonString) {
 
         ArrayList<Reminder> rems;

@@ -29,7 +29,7 @@
             android:layout_gravity="start|center_vertical"
             android:layout_weight="1"
 
-            android:text="@string/text_theme"
+            android:text="@string/text_options_theme"
             android:textSize="20sp" />
 
         <Spinner
@@ -65,13 +65,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
 
-        android:text="@string/text_support"
+        android:text="@string/text_options_support"
         android:clickable="true"
         android:textSize="20sp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/options_theme_warning"/>
+        app:layout_constraintTop_toBottomOf="@+id/options_theme_warning"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/options_about"
@@ -81,12 +82,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
-        android:text="@string/text_about"
+        android:text="@string/text_options_about"
         android:textSize="20sp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/options_support" />
+        app:layout_constraintTop_toBottomOf="@+id/options_support"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

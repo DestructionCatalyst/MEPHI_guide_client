@@ -11,7 +11,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FileHelper {
 
-    FragmentActivity context;
+    private FragmentActivity context;
 
     public FileHelper(FragmentActivity context){
         this.context = context;

@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Отображать все"
+            android:text="@string/text_reminder_all"
             android:textAlignment="viewEnd"
             android:textColor="@color/design_default_color_primary_dark" />
 
@@ -28,10 +28,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Отображать невыполненные"
+            android:text="@string/text_reminder_notdone"
             android:textColor="@color/design_default_color_primary_dark" />
 
     </LinearLayout>
+
+    <com.example.mephiguide.ui.LoadErrorMessage
+        android:id="@+id/reminder_lem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/reminder_listView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reminder_line1" />
 
     <ListView
         android:id="@+id/reminder_listView"
@@ -40,6 +50,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reminder_line1" />
+        app:layout_constraintTop_toBottomOf="@id/reminder_lem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

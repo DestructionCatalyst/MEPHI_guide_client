@@ -2,7 +2,6 @@
     <string name="app_name">Путеводитель по МИФИ</string>
     <string name="app_version">2.0</string>
 
-    <string name="server_ip">http://194.87.232.95:45555/home/</string>
 
     <string name="title_home">Новости</string>
     <string name="title_reminder">Памятка</string>
@@ -11,12 +10,17 @@
     <string name="title_telephony">Телефонная книга</string>
     <string name="title_options">Параметры</string>
 
-    <string name="text_about">О приложении</string>
-    <string name="text_theme">Тема</string>
-    <string name="text_support">Техподдержка</string>
+    <string name="text_options_about">О приложении</string>
+    <string name="text_options_theme">Тема</string>
+    <string name="text_options_support">Техподдержка</string>
     <string name="text_theme_warning">(При смене темы приложение будет перезапущено)</string>
-    <string name="text_all">Все</string>
-    <string name="text_forme">Для меня</string>
+    <string name="text_news_all">Все</string>
+    <string name="text_news_forme">Для меня</string>
+    <string name="text_reminder_all">Отображать все</string>
+    <string name="text_reminder_notdone">Отображать невыполненные</string>
+
+    <string name="lem_loading">Загрузка…</string>
+    <string name="lem_error">Ошибка загрузки данных! Проверьте подключение к Интернету!</string>
 
     <string name="web_start">
         <![CDATA[
@@ -35,4 +39,6 @@
 
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+
 </resources>

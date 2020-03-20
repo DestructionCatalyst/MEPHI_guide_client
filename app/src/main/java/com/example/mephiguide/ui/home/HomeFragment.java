@@ -1,7 +1,6 @@
 package com.example.mephiguide.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.example.mephiguide.R;
 import com.example.mephiguide.ValueKeeper;
 import com.example.mephiguide.data_types.Group;
 import com.example.mephiguide.data_types.News;
+import com.example.mephiguide.ui.LoadErrorMessage;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
     private final String FILE_NAME_GROUP = "group";
     private final String FILE_NAME_AUTO = "autotheme";
     private final String FILE_NAME_CHECK = "checked";
+
     private HomeViewModel homeViewModel;
 
     private ListView listView;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment {
     private Switch sw;
     private TextView textView;
     private ArrayList<Group> groups;
+    private LoadErrorMessage lem;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,79 +51,65 @@ public class HomeFragment extends Fragment {
         homeViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<ArrayList<News>>() {
             @Override
             public void onChanged(ArrayList<News> news) {
-                setNewsAdapter(news);
-
+                if (news != null) {
+                    setNewsAdapter(news);
+                    lem.changeStatus(LoadErrorMessage.LOAD_FINISHED);
+                }
+                else
+                    lem.changeStatus(LoadErrorMessage.LOAD_ERROR);
             }
         });
 
         homeViewModel.getGroups().observe(getViewLifecycleOwner(), new Observer<ArrayList<Group>>() {
             @Override
             public void onChanged(ArrayList<Group> groups) {
-                setGroupsAdapter(groups);
-
+                if (groups != null) {
+                    setGroupsAdapter(groups);
+                    lem.changeStatus(LoadErrorMessage.LOAD_FINISHED);
+                }
+                else
+                    lem.changeStatus(LoadErrorMessage.LOAD_ERROR);
             }
         });
 
         listView = root.findViewById(R.id.home_listView);
+
         spinner = root.findViewById(R.id.home_spinner_groups);
+        setSpinnerListener();
+
         sw = root.findViewById(R.id.home_switch_target_mode);
+        sw.setChecked(loadChecked());
+        setSwitchListener();
+
         textView = root.findViewById(R.id.home_textView_forme);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                boolean reset = false;
-                if (((Group)parent.getItemAtPosition(position)).id != ValueKeeper.getInstance().curGroup.id)
-                    reset = true;
-                ValueKeeper.getInstance().curGroup = (Group)parent.getItemAtPosition(position);
-                Log.d("Mics", ValueKeeper.getInstance().curGroup.name);
-                changeGroup();
-                if (reset) ((MainActivity)getActivity()).reset();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        sw.setChecked(loadChecked());
-        sw.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                saveChecked(isChecked);
-                if (sw.getVisibility() == View.VISIBLE) {//If it is visible, then not a 'guest' is selected
-                    refresh(isChecked);
-                }
-                else refresh(false);
-            }
-        });
+        lem = root.findViewById(R.id.home_lem);
+        lem.changeStatus(LoadErrorMessage.LOAD_PROGRESS);
 
         return root;
     }
 
-    void setNewsAdapter(ArrayList<News> news){
+    private void setNewsAdapter(ArrayList<News> news){
         NewsAdapter newsAdapter = new NewsAdapter(this.getActivity(), this, news);
         listView.setAdapter(newsAdapter);
     }
 
-    void setGroupsAdapter(ArrayList<Group> groups){
+    private void setGroupsAdapter(ArrayList<Group> groups){
         this.groups = groups;
         readFile();
         ArrayAdapter groupAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_spinner_item, groups);
         groupAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setAdapter(groupAdapter);
-        spinner.setSelection(ValueKeeper.getInstance().curGroup.id);
+        spinner.setSelection(ValueKeeper.getInstance().curGroup.getId());
     }
 
-    void changeGroup(){
+    private void changeGroup(){
 
         FileHelper fhelp = new FileHelper(this.getActivity());
-        fhelp.writeFile(FILE_NAME_GROUP, "" + ValueKeeper.getInstance().curGroup.id);
-        fhelp.writeFile(FILE_NAME_AUTO, ""+ValueKeeper.getInstance().curGroup.idInst);
+        fhelp.writeFile(FILE_NAME_GROUP, "" + ValueKeeper.getInstance().curGroup.getId());
+        fhelp.writeFile(FILE_NAME_AUTO, ""+ ValueKeeper.getInstance().curGroup.getIdInst());
 
-        if (ValueKeeper.getInstance().curGroup.idInst == 0){
+        if (ValueKeeper.getInstance().curGroup.getIdInst() == 0){
             sw.setChecked(false);
             sw.setVisibility(View.INVISIBLE);
             textView.setVisibility(View.INVISIBLE);
@@ -134,9 +122,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    void refresh(boolean targeting){
+    private void refresh(boolean targeting){
         if(targeting){
-            homeViewModel.updateNews(ValueKeeper.getInstance().curGroup.idInst);
+            homeViewModel.updateNews(ValueKeeper.getInstance().curGroup.getIdInst());
         }
         else{
             homeViewModel.updateNews(0);
@@ -162,18 +150,51 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    void saveChecked(boolean checked){
+    private void saveChecked(boolean checked){
         String toWrite = checked ? "true" : "false";
         FileHelper fhelp = new FileHelper(this.getActivity());
         fhelp.writeFile(FILE_NAME_CHECK, toWrite);
     }
 
-    boolean loadChecked(){
+    private boolean loadChecked(){
         FileHelper fhelp = new FileHelper(this.getActivity());
         String tmp = fhelp.readFile(FILE_NAME_CHECK);
         if (tmp.equals("true"))
             return true;
         else
             return false;
+    }
+
+    private void setSpinnerListener(){
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                boolean reset = false;
+                if ((((Group) parent.getItemAtPosition(position)).getId() != ValueKeeper.getInstance().curGroup.getId())
+                        && (((MainActivity)getActivity()).selectedTheme == 0))
+                    reset = true;
+
+                ValueKeeper.getInstance().curGroup = (Group)parent.getItemAtPosition(position);
+                changeGroup();
+                if (reset) ((MainActivity)getActivity()).reset();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setSwitchListener(){
+
+        sw.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                saveChecked(isChecked);
+                refresh(isChecked);
+            }
+        });
     }
 }

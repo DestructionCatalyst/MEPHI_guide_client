@@ -13,8 +13,8 @@ import java.net.URL;
 
 public class NetworkTask extends AsyncTask<String, Void, String> {
 
-    MutableLiveData target;
-    JSONStrategy strat;
+    private MutableLiveData target;
+    private JSONStrategy strat;
 
     public NetworkTask(MutableLiveData target, JSONStrategy strat){
 
@@ -47,12 +47,12 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
             URL url=new URL(path);
             HttpURLConnection c=(HttpURLConnection)url.openConnection();
             c.setRequestMethod("GET");
-            c.setConnectTimeout(5000);
+            c.setConnectTimeout(10000);
             c.setReadTimeout(20000);
             c.connect();
             reader= new BufferedReader(new InputStreamReader(c.getInputStream()));
             StringBuilder buf=new StringBuilder();
-            String line=null;
+            String line;
             while ((line=reader.readLine()) != null) {
                 buf.append(line + "\n");
             }
@@ -79,15 +79,14 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
         super.onPostExecute(content);
         if (content.startsWith("[")){
             //Открываем
-            Log.d("Connection","Got JSON from the server: "+content);
+            Log.d("Connection","Got JSON from the server");
             JSONHelper helper1 = new JSONHelper(strat, target);
             helper1.execute(content);
-            //context.open(content);
         }
         else{
             //Ругаемся
             Log.d("Connection","Error getting JSON from the server");
-            //context.connFailed(content);
+            target.postValue(null);
         }
 
     }

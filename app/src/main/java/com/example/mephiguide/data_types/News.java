@@ -8,7 +8,7 @@ public class News {
     private String t;
     private String text;
     private String place;
-    byte[]top_img;
+    private byte[]top_img;
     public News(int id, int institution, int idPlace, String name, String t, String text, String place){
         this.setId(id);
         this.institution = institution;

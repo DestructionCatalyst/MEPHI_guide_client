@@ -1,8 +1,8 @@
 package com.example.mephiguide.data_types;
 
 public class Dot {
-    int id, x,y;
-    String name;
+    private int id, x,y;
+    private String name;
     public Dot(int id, String name, int x, int y){
         this.id = id;
         this.name = name;

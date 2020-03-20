@@ -16,16 +16,15 @@ import com.example.mephiguide.data_types.News;
 import java.util.ArrayList;
 
 public class NewsAdapter extends BaseAdapter {
-    Context ctx;
-    LayoutInflater lInflater;
-    ArrayList<News> objects;
-    HomeFragment fragment;
+
+    private LayoutInflater lInflater;
+    private ArrayList<News> objects;
+    private HomeFragment fragment;
 
     NewsAdapter(Context context, HomeFragment frag, ArrayList<News> products) {
-        ctx = context;
         objects = products;
         fragment = frag;
-        lInflater = (LayoutInflater) ctx
+        lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -56,9 +55,7 @@ public class NewsAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.newsitem, parent, false);
         }
 
-
         final News pnews = getNews(position);
-
 
         ((TextView) view.findViewById(R.id.tvName)).setText(pnews.getName());
         ((TextView) view.findViewById(R.id.tvTime)).setText(pnews.getT());
@@ -70,7 +67,6 @@ public class NewsAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Bundle bundle = new Bundle();
-                bundle.putString("title", "Новость");
                 bundle.putString("data", fragment.getString(R.string.web_start)
                         + "<h4><br>" + pnews.getName() + "</h4><br>" + pnews.getText() +
                         "<br>Место: " + pnews.getPlace() + "<br>Время: " + pnews.getT() +
@@ -83,7 +79,7 @@ public class NewsAdapter extends BaseAdapter {
     }
 
     // напом. по позиции
-    News getNews(int position) {
+    private News getNews(int position) {
         return ((News) getItem(position));
     }
 

@@ -13,24 +13,21 @@ import android.widget.TextView;
 
 import androidx.navigation.Navigation;
 
-import com.example.mephiguide.MainActivity;
 import com.example.mephiguide.R;
 import com.example.mephiguide.data_types.Reminder;
 
 import java.util.ArrayList;
 
 public class ReminderAdapter extends BaseAdapter {
-    MainActivity ctx;
-    LayoutInflater lInflater;
-    ArrayList<Reminder> objects;
-    CheckBox cbDone;
-    ReminderFragment fragment;
+
+    private LayoutInflater lInflater;
+    private ArrayList<Reminder> objects;
+    private ReminderFragment fragment;
 
     ReminderAdapter(Context context, ReminderFragment frag, ArrayList<Reminder> reminders) {
-        ctx = (MainActivity) context;
         objects = reminders;
         fragment = frag;
-        lInflater = (LayoutInflater) ctx
+        lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -72,7 +69,6 @@ public class ReminderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title", "Новость");
                 bundle.putString("data", fragment.getString(R.string.web_start) +
                         "<h4>" + rem.getName() + "</h4><br>" + rem.getText() +
                         "<br>Место: " + rem.getPlace() + "<br>Сроки: " + rem.getTime() +
@@ -82,7 +78,7 @@ public class ReminderAdapter extends BaseAdapter {
             }
         });
 
-        cbDone = (CheckBox) view.findViewById(R.id.cbBox);
+        CheckBox cbDone = (CheckBox) view.findViewById(R.id.cbBox);
         // присваиваем чекбоксу обработчик
         cbDone.setOnCheckedChangeListener(myCheckChangeList);
         // пишем позицию
@@ -105,7 +101,7 @@ public class ReminderAdapter extends BaseAdapter {
 
             getReminder((Integer) buttonView.getTag()).setChecked(isChecked);
             fragment.saveReminders();
-            if (fragment.sw.isChecked())
+            if (fragment.getSwitchChecked())
                 fragment.setRemindersAdapter();
         }
     };

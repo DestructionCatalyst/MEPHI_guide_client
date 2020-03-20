@@ -1,16 +1,14 @@
 package com.example.mephiguide.ui.qr;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mephiguide.R;
 
@@ -31,7 +29,7 @@ public class QrFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(QrViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(QrViewModel.class);
         // TODO: Use the ViewModel
     }
 

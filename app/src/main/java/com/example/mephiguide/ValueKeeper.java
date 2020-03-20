@@ -13,6 +13,5 @@ public class ValueKeeper {
         return ourInstance;
     }
 
-    private ValueKeeper() {
-    }
+    private ValueKeeper() {}
 }

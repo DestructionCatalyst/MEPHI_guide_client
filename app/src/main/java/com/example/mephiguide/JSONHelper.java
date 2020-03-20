@@ -23,10 +23,7 @@ public class JSONHelper extends AsyncTask <String,Void,ArrayList>{
     }
     @Override
     protected void onPostExecute(ArrayList content) {
-        if (content!=null){
-            Log.d("Connection","Parsed JSON: "+content.get(0).toString());
-            target.postValue(content);
-        }
-
+        Log.d("Connection","Parsed JSON");
+        target.postValue(content);
     }
 }

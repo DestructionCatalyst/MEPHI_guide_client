@@ -27,10 +27,6 @@ public class OptionsFragment extends Fragment {
 
     private Spinner spinner;
 
-    public static OptionsFragment newInstance() {
-        return new OptionsFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

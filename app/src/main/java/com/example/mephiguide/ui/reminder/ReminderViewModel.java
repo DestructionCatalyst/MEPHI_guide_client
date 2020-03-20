@@ -16,25 +16,18 @@ public class ReminderViewModel extends ViewModel {
     private final String lnkpostReminders = "getrem/";
 
     private MutableLiveData<ArrayList<Reminder>> remindersArrayList;
-    private MutableLiveData<String> mText;
 
     public ReminderViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is reminder fragment");
 
         remindersArrayList = new MutableLiveData<>();
         updateReminders();
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
-
-    public LiveData<ArrayList<Reminder>> getReminders (){
+    LiveData<ArrayList<Reminder>> getReminders(){
         return remindersArrayList;
     }
 
-    public void updateReminders(){
+    private void updateReminders(){
 
         NetworkTask task = new NetworkTask(remindersArrayList, new ReminderJSONHelper());
         task.execute(ValueKeeper.getInstance().lnkbase + lnkpostReminders);

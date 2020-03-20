@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WayJSONHelper implements JSONStrategy {
+
     public ArrayList<Way> importFromJSON(String jsonString) {
 
         ArrayList<Way> ways;

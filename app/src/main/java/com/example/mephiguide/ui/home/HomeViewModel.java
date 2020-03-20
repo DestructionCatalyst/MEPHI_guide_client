@@ -29,22 +29,22 @@ public class HomeViewModel extends ViewModel {
         updateGroups();
     }
 
-    public LiveData<ArrayList<News>> getNews() {
+    LiveData<ArrayList<News>> getNews() {
         return newsArrayList;
     }
 
-    public LiveData<ArrayList<Group>> getGroups(){
+    LiveData<ArrayList<Group>> getGroups(){
         return groupArrayList;
     }
 
-    public void updateNews(int group){
+    void updateNews(int group){
 
         NetworkTask task = new NetworkTask(newsArrayList, new NewsJSONHelper());
         task.execute(ValueKeeper.getInstance().lnkbase + lnkpostNews + group);
 
     }
 
-    public void updateGroups(){
+    private void updateGroups(){
 
         NetworkTask task1 = new NetworkTask(groupArrayList, new GroupsJSONHelper());
         task1.execute(ValueKeeper.getInstance().lnkbase + lnkpostGroups);

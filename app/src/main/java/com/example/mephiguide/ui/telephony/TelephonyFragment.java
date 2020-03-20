@@ -1,26 +1,20 @@
 package com.example.mephiguide.ui.telephony;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mephiguide.R;
 
 public class TelephonyFragment extends Fragment {
 
     private TelephonyViewModel mViewModel;
-
-    public static TelephonyFragment newInstance() {
-        return new TelephonyFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -31,7 +25,7 @@ public class TelephonyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(TelephonyViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(TelephonyViewModel.class);
         // TODO: Use the ViewModel
     }
 
