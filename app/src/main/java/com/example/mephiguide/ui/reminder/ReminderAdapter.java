@@ -78,7 +78,7 @@ public class ReminderAdapter extends BaseAdapter {
             }
         });
 
-        CheckBox cbDone = (CheckBox) view.findViewById(R.id.cbBox);
+        CheckBox cbDone = view.findViewById(R.id.cbBox);
         // присваиваем чекбоксу обработчик
         cbDone.setOnCheckedChangeListener(myCheckChangeList);
         // пишем позицию

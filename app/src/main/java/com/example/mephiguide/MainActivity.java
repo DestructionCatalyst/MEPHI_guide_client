@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     private void selectTheme(){
         int th = selectedTheme;
         if (th == 0){
