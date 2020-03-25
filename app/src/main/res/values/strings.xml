@@ -23,6 +23,7 @@
     <string name="lem_error">Ошибка загрузки данных! Проверьте подключение к Интернету!</string>
 
     <string name="scanner_error">Разрешите доступ к камере, чтобы отсканировать QR-код</string>
+    <string name="wrong_qr">Данный QR-код не является QR-кодом аудитории или отсутствует подключение к Интернету. Содержимое QR-кода:</string>
 
     <string name="web_start">
         <![CDATA[
