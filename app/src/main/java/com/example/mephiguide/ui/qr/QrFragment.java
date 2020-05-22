@@ -130,10 +130,16 @@ public class QrFragment extends Fragment {
 
                         showingQr = false;
                         contents = result.getText();
-                        String prefix = contents.substring(0, contents.indexOf(' '));
+                        String prefix = contents;
+                        if(contents.contains(" "))
+                            prefix = contents.substring(0, contents.indexOf(' '));
+
                         try {
                             prefix = URLEncoder.encode(prefix, "utf-8");
-                        } catch (UnsupportedEncodingException e) {
+                            mViewModel.updateQr(prefix);
+                            Log.d("QR", "Отсканировали QR-код: " + prefix);
+                        }
+                        catch (UnsupportedEncodingException e) {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
                             builder1.setMessage("Не удалось считать QR-код. Пожалуйста, попробуйте ещё раз.")
                                     .setTitle("QR-код");
@@ -141,8 +147,6 @@ public class QrFragment extends Fragment {
                             dialog1.show();
                             e.printStackTrace();
                         }
-                        mViewModel.updateQr(prefix);
-                        Log.d("QR", "Отсканировали QR-код");
 
                     }
                 });
@@ -177,14 +181,16 @@ public class QrFragment extends Fragment {
                 Navigation.findNavController(scannerView).navigate(R.id.action_navigation_qr_to_navigation_html, bundle);
             } else {
                 Bundle bundle = new Bundle();
-                bundle.putString("data", getString(R.string.web_start) + "<h4>" +
-                        getString(R.string.wrong_qr) +
-                        "</h4><br>" + contents + getString(R.string.web_end));
+                bundle.putString("qr",
+                        getString(R.string.wrong_qr) + "\n\n" + contents);
                 contents = "";
                 Navigation.findNavController(scannerView).navigate(R.id.action_navigation_qr_to_navigation_html, bundle);
+
             }
             Log.d("QR", "Открываем QR-код");
         }
     }
 
+
 }
+

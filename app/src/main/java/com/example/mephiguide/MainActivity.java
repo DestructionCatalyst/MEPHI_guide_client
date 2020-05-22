@@ -2,8 +2,10 @@ package com.example.mephiguide;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,14 +15,20 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     public int selectedTheme = 0;
     private final String FILE_NAME_THEMES = "theme";
     private final String FILE_NAME_AUTO = "autotheme";
+    private final String FILE_NAME_LOG = "logs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        saveLogs();
 
         selectedTheme = loadTheme();
 
@@ -60,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
 
     private void selectTheme(){
         int th = selectedTheme;
@@ -149,5 +155,26 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    void saveLogs(){
+        Log.d("MyLogs", "Saving logs");
+        try {
+            File filename = new File(getFilesDir()+"/mylog.log");
+            if(filename.delete())
+                Log.d("MyLogs", "Deleted!");
+            else
+                Log.d("MyLogs", "Unable to delete!");
+            filename.createNewFile();
+            FileHelper helper = new FileHelper(this);
+            helper.writeFile("mylog.log", "");
+            String cmd = "logcat -d -f "+filename.getAbsolutePath();// + " MyLogs:V System.err:D *:S";
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    public void displayMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

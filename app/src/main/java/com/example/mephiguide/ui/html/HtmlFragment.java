@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,14 +17,24 @@ import com.example.mephiguide.R;
 public class HtmlFragment extends Fragment {
 
     private WebView webView;
+    private TextView textView;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_html, container, false);
 
-        webView = root.findViewById(R.id.html_webview);
+        webView = root.findViewById(R.id.html_webView);
         webView.loadData(getArguments().getString("data"), "text/html; charset=utf-8", "utf-8");
+
+        textView = root.findViewById(R.id.html_textView);
+        String qr = getArguments().getString("qr");
+        if ((qr != null)&&(!qr.equals(""))){
+            textView.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.GONE);
+            textView.setText(qr);
+        }
 
         return root;
     }

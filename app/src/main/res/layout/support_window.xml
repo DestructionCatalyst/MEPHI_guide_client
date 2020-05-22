@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/support_mail_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Укажите свой адрес электронной почты:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/support_input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:gravity="start|top"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/support_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Опишите свою проблему или пожелание:" />
+
+    <EditText
+        android:id="@+id/support_input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+    <requestFocus />
+</LinearLayout>

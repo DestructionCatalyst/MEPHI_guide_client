@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "233239229616",
+    "firebase_url": "https://mephiguide.firebaseio.com",
+    "project_id": "mephiguide",
+    "storage_bucket": "mephiguide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233239229616:android:a25b7970d6d0e02613b775",
+        "android_client_info": {
+          "package_name": "com.example.mephiguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233239229616-8l0nvladuoaiqtjs85rd186mfuff4bmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUPZO1jC4wA1jkRABpAQif3I6AqrtludE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233239229616-8l0nvladuoaiqtjs85rd186mfuff4bmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
