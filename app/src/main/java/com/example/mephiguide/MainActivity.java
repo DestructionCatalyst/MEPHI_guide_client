@@ -2,10 +2,8 @@ package com.example.mephiguide;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -14,9 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.io.File;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        saveLogs();
 
         selectedTheme = loadTheme();
 
@@ -155,26 +148,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    void saveLogs(){
-        Log.d("MyLogs", "Saving logs");
-        try {
-            File filename = new File(getFilesDir()+"/mylog.log");
-            if(filename.delete())
-                Log.d("MyLogs", "Deleted!");
-            else
-                Log.d("MyLogs", "Unable to delete!");
-            filename.createNewFile();
-            FileHelper helper = new FileHelper(this);
-            helper.writeFile("mylog.log", "");
-            String cmd = "logcat -d -f "+filename.getAbsolutePath();// + " MyLogs:V System.err:D *:S";
-            Runtime.getRuntime().exec(cmd);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void displayMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 }
