@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.mephiguide.R;
+import com.example.mephiguide.data_types.Contact;
 
 import java.util.ArrayList;
 

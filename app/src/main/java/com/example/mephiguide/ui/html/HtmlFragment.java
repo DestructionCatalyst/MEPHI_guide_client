@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.R;
 
 public class HtmlFragment extends Fragment {
@@ -24,6 +25,7 @@ public class HtmlFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_html, container, false);
+        MyLog.i("Navigated to HTML content fragment");
 
         webView = root.findViewById(R.id.html_webView);
         webView.loadData(getArguments().getString("data"), "text/html; charset=utf-8", "utf-8");

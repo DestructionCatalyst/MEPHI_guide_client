@@ -1,7 +1,6 @@
 package com.example.mephiguide;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -23,7 +22,7 @@ public class JSONHelper extends AsyncTask <String,Void,ArrayList>{
     }
     @Override
     protected void onPostExecute(ArrayList content) {
-        Log.d("Connection","Parsed JSON");
+        MyLog.d("Parsed JSON");
         target.postValue(content);
     }
 }

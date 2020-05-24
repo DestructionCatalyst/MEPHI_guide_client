@@ -1,6 +1,7 @@
 package com.example.mephiguide.JSONHelpers;
 
 import com.example.mephiguide.JSONStrategy;
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.data_types.News;
 import com.google.gson.Gson;
 
@@ -20,6 +21,7 @@ public class NewsJSONHelper implements JSONStrategy {
             return newss;
         }
         catch (Exception ex){
+            MyLog.e("Error reading JSON content: News", ex);
             ex.printStackTrace();
         }
         return null;

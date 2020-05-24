@@ -1,6 +1,7 @@
 package com.example.mephiguide.JSONHelpers;
 
 import com.example.mephiguide.JSONStrategy;
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.data_types.Way;
 import com.google.gson.Gson;
 
@@ -18,6 +19,7 @@ public class WayJSONHelper implements JSONStrategy {
             return ways;
         }
         catch (Exception ex){
+            MyLog.e("Error reading JSON content: Ways", ex);
             ex.printStackTrace();
         }
         return null;

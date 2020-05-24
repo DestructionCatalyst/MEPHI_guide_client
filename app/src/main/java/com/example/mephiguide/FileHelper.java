@@ -19,6 +19,7 @@ public class FileHelper {
 
     public String readFile(final String FILE_NAME){
 
+        MyLog.v("Reading file " + FILE_NAME);
         String toRead = "";
         try {
             FileInputStream fin = context.openFileInput(FILE_NAME);
@@ -28,9 +29,11 @@ public class FileHelper {
             fin.close();
         }
         catch (FileNotFoundException e) {
+            MyLog.w(FILE_NAME + " file is missing!");
             e.printStackTrace();
         }
         catch (IOException e) {
+            MyLog.e("Error reading file " + FILE_NAME, e);
             e.printStackTrace();
         }
         return toRead;
@@ -38,14 +41,17 @@ public class FileHelper {
 
     public boolean writeFile(final String FILE_NAME, String toWrite){
         try {
+            MyLog.v("Writing file " + FILE_NAME);
             FileOutputStream fos = context.openFileOutput(FILE_NAME, MODE_PRIVATE);
             if (toWrite != null)
                 fos.write(toWrite.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
+            MyLog.w(FILE_NAME + " file is missing!");
             e.printStackTrace();
             return false;
         } catch (IOException e) {
+            MyLog.e("Error writing file " + FILE_NAME, e);
             e.printStackTrace();
             return false;
         }

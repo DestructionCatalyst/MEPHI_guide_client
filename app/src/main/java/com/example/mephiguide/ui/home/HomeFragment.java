@@ -19,10 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.MainActivity;
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.R;
 import com.example.mephiguide.ValueKeeper;
 import com.example.mephiguide.data_types.Group;
 import com.example.mephiguide.data_types.News;
+import com.example.mephiguide.ui.LEMState;
 import com.example.mephiguide.ui.LoadErrorMessage;
 
 import java.util.ArrayList;
@@ -53,10 +55,12 @@ public class HomeFragment extends Fragment {
             public void onChanged(ArrayList<News> news) {
                 if (news != null) {
                     setNewsAdapter(news);
-                    lem.changeStatus(LoadErrorMessage.LOAD_FINISHED);
+                    lem.changeStatus(LEMState.LOAD_FINISHED);
                 }
-                else
-                    lem.changeStatus(LoadErrorMessage.LOAD_ERROR);
+                else {
+                    MyLog.w("Unable to load news!");
+                    lem.changeStatus(LEMState.LOAD_ERROR);
+                }
             }
         });
 
@@ -65,10 +69,12 @@ public class HomeFragment extends Fragment {
             public void onChanged(ArrayList<Group> groups) {
                 if (groups != null) {
                     setGroupsAdapter(groups);
-                    lem.changeStatus(LoadErrorMessage.LOAD_FINISHED);
+                    lem.changeStatus(LEMState.LOAD_FINISHED);
                 }
-                else
-                    lem.changeStatus(LoadErrorMessage.LOAD_ERROR);
+                else {
+                    lem.changeStatus(LEMState.LOAD_ERROR);
+                    MyLog.w("Unable to load groups!");
+                }
             }
         });
 
@@ -84,7 +90,7 @@ public class HomeFragment extends Fragment {
         textView = root.findViewById(R.id.home_textView_forme);
 
         lem = root.findViewById(R.id.home_lem);
-        lem.changeStatus(LoadErrorMessage.LOAD_PROGRESS);
+        lem.changeStatus(LEMState.LOAD_PROGRESS);
 
         return root;
     }
@@ -92,11 +98,12 @@ public class HomeFragment extends Fragment {
     private void setNewsAdapter(ArrayList<News> news){
         NewsAdapter newsAdapter = new NewsAdapter(this.getActivity(), this, news);
         listView.setAdapter(newsAdapter);
+        MyLog.i("News refreshed!");
     }
 
     private void setGroupsAdapter(ArrayList<Group> groups){
         this.groups = groups;
-        readFile();
+        readGroupsFile();
         ArrayAdapter groupAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_spinner_item, groups);
         groupAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setAdapter(groupAdapter);
@@ -104,6 +111,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void changeGroup(){
+        MyLog.i("Group changed to " + ValueKeeper.getInstance().curGroup.getName());
 
         FileHelper fhelp = new FileHelper(this.getActivity());
         fhelp.writeFile(FILE_NAME_GROUP, "" + ValueKeeper.getInstance().curGroup.getId());
@@ -123,6 +131,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void refresh(boolean targeting){
+        MyLog.i("Refreshing news...");
         if(targeting){
             homeViewModel.updateNews(ValueKeeper.getInstance().curGroup.getIdInst());
         }
@@ -131,7 +140,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void readFile(){
+    private void readGroupsFile(){
 
         FileHelper fhelp = new FileHelper(this.getActivity());
         String toRead = fhelp.readFile(FILE_NAME_GROUP);
@@ -144,6 +153,7 @@ public class HomeFragment extends Fragment {
                 ValueKeeper.getInstance().curGroup = groups.get(tmp);
             }
             catch (NumberFormatException e){
+                MyLog.w("Group file corrupted!");
                 ValueKeeper.getInstance().curGroup = new Group(0,"(Гость)",0);
             }
 

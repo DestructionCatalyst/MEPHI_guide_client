@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.MainActivity;
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.R;
 
 public class OptionsFragment extends Fragment {
@@ -88,7 +88,7 @@ public class OptionsFragment extends Fragment {
 
     private void openMail(){
 
-        Log.d("MyLogs", "Preparing to send e-mail");
+        MyLog.i("Preparing to send e-mail");
 
         try
         {
@@ -100,6 +100,7 @@ public class OptionsFragment extends Fragment {
         }
         catch (ActivityNotFoundException anfe)
         {
+            MyLog.w("No mail client pn the device!");
             Toast.makeText(this.getActivity(), "На устройстве не найден почтовый клиент", Toast.LENGTH_SHORT).show();
         }
 

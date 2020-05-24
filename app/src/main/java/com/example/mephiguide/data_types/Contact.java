@@ -1,11 +1,11 @@
-package com.example.mephiguide.ui.telephony;
+package com.example.mephiguide.data_types;
 
 public class Contact {
     private String name;
     private String number;
     private boolean annotation;
 
-    Contact(String name, String number, boolean annotation){
+    public Contact(String name, String number, boolean annotation){
         this.setName(name);
         this.setNumber(number);
         this.setAnnotation(annotation);

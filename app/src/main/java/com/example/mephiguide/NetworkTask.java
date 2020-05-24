@@ -1,7 +1,6 @@
 package com.example.mephiguide;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -30,7 +29,7 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... path) {
         String content;
-        Log.d("Connection"," Conntecting to server, URL is "+path[0]);
+        MyLog.d("Connecting to server, URL is "+path[0]);
         try{
             content = getContent(path[0]);
         }
@@ -59,6 +58,7 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
             return(buf.toString());
         }
         catch(Exception e){
+            MyLog.e("Unable to connect to the server!", e);
             e.printStackTrace();
             /*StackTraceElement [] err = e.getStackTrace();
             String tmp=e.getMessage()+"\n";
@@ -79,13 +79,13 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
         super.onPostExecute(content);
         if (content.startsWith("[")){
             //Открываем
-            Log.d("Connection","Got JSON from the server");
+            MyLog.d("Got JSON from the server");
             JSONHelper helper1 = new JSONHelper(strat, target);
             helper1.execute(content);
         }
         else{
             //Ругаемся
-            Log.d("Connection","Error getting JSON from the server");
+            MyLog.w("Error getting JSON from the server");
             target.postValue(null);
         }
 

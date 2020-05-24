@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mephiguide.R;
+import com.example.mephiguide.data_types.Contact;
 
 import java.util.ArrayList;
 

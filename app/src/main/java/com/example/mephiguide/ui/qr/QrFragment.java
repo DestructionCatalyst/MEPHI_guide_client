@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.budiyev.android.codescanner.ErrorCallback;
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.R;
 import com.example.mephiguide.data_types.Qr;
 import com.google.zxing.Result;
@@ -137,9 +137,10 @@ public class QrFragment extends Fragment {
                         try {
                             prefix = URLEncoder.encode(prefix, "utf-8");
                             mViewModel.updateQr(prefix);
-                            Log.d("QR", "Отсканировали QR-код: " + prefix);
+                            MyLog.i("QR code scanned: " + prefix);
                         }
                         catch (UnsupportedEncodingException e) {
+                            MyLog.i("Failed to decode QR");
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
                             builder1.setMessage("Не удалось считать QR-код. Пожалуйста, попробуйте ещё раз.")
                                     .setTitle("QR-код");
@@ -156,6 +157,7 @@ public class QrFragment extends Fragment {
         mCodeScanner.setErrorCallback(new ErrorCallback(){
             @Override
             public void onError(@NonNull Exception error) {
+                MyLog.w("No camera permission");
                 getActivity().runOnUiThread(
                         new Runnable() {
                             @Override
@@ -169,6 +171,7 @@ public class QrFragment extends Fragment {
     }
 
     private void showQR(ArrayList qr){
+
         if (!showingQr) {
             showingQr = true;
 
@@ -187,7 +190,7 @@ public class QrFragment extends Fragment {
                 Navigation.findNavController(scannerView).navigate(R.id.action_navigation_qr_to_navigation_html, bundle);
 
             }
-            Log.d("QR", "Открываем QR-код");
+            MyLog.i("Opening QR-Code");
         }
     }
 

@@ -18,10 +18,11 @@ public class MainActivity extends AppCompatActivity {
     public int selectedTheme = 0;
     private final String FILE_NAME_THEMES = "theme";
     private final String FILE_NAME_AUTO = "autotheme";
-    private final String FILE_NAME_LOG = "logs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        MyLog.i("Starting MEPHI guide application, version "+getString(R.string.app_version));
 
         selectedTheme = loadTheme();
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectTheme(){
+        MyLog.v("Selecting theme");
+
         int th = selectedTheme;
         if (th == 0){
             th = readGroup() + 1;
@@ -104,20 +107,24 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             default:
+                MyLog.w("Incorrect theme identifier!");
                 setTheme(R.style.AppTheme);
         }
     }
 
     private int loadTheme(){
+        MyLog.v("Loading theme");
 
         FileHelper fhelp = new FileHelper(this);
-        String read = fhelp.readFile(FILE_NAME_THEMES);
+        String read = "";
+        read = fhelp.readFile(FILE_NAME_THEMES);
         int res = 0;
 
         try {
             res = Integer.parseInt(read);
         }
         catch (NumberFormatException e){
+            MyLog.w("THEMES file is missing or corrupted!");
             e.printStackTrace();
         }
         return res;
@@ -125,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int readGroup(){
+        MyLog.v("Loading theme to auto-select");
 
         FileHelper fhelp = new FileHelper(this);
         String toRead = fhelp.readFile(FILE_NAME_AUTO);
@@ -135,12 +143,14 @@ public class MainActivity extends AppCompatActivity {
             res = Integer.parseInt(toRead);
         }
         catch (NumberFormatException e){
+            MyLog.w("AUTO_THEMES file is missing or corrupted!");
             e.printStackTrace();
         }
         return res;
     }
 
     public void reset(){
+        MyLog.i("Resetting the application");
         this.finish();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

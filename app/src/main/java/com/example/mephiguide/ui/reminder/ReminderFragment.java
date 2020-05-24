@@ -15,8 +15,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mephiguide.FileHelper;
+import com.example.mephiguide.MyLog;
 import com.example.mephiguide.R;
 import com.example.mephiguide.data_types.Reminder;
+import com.example.mephiguide.ui.LEMState;
 import com.example.mephiguide.ui.LoadErrorMessage;
 
 import java.util.ArrayList;
@@ -48,10 +50,12 @@ public class ReminderFragment extends Fragment {
                     reminders = rems;
                     setRemindersAdapter();
                     loadReminders();
-                    lem.changeStatus(LoadErrorMessage.LOAD_FINISHED);
+                    lem.changeStatus(LEMState.LOAD_FINISHED);
                 }
-                else
-                    lem.changeStatus(LoadErrorMessage.LOAD_ERROR);
+                else {
+                    MyLog.w("Unable to load reminders!");
+                    lem.changeStatus(LEMState.LOAD_ERROR);
+                }
             }
         });
 
@@ -66,7 +70,7 @@ public class ReminderFragment extends Fragment {
         });
 
         lem = root.findViewById(R.id.reminder_lem);
-        lem.changeStatus(LoadErrorMessage.LOAD_PROGRESS);
+        lem.changeStatus(LEMState.LOAD_PROGRESS);
 
         return root;
     }
@@ -88,7 +92,7 @@ public class ReminderFragment extends Fragment {
     }
 
     void saveReminders(){
-
+        MyLog.i("Saving reminders");
         StringBuilder write = new StringBuilder();
         for (Reminder cur: reminders) {
             if (cur.isChecked()) write.append(cur.getID()).append("~");
@@ -98,7 +102,7 @@ public class ReminderFragment extends Fragment {
     }
 
     private void loadReminders(){
-
+        MyLog.i("Loading reminders");
         FileHelper fhelp = new FileHelper(this.getActivity());
         String [] tmp= fhelp.readFile(FILE_NAME_REMINDERS).split("~");
         HashSet ids = new HashSet();

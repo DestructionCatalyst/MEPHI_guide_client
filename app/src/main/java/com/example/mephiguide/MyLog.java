@@ -24,6 +24,7 @@ public class MyLog {
     }
     public static void i(String message){
         Log.i(TAG, message);
+        FirebaseCrashlytics.getInstance().log(message);
     }
     public static void w(String message){
         Log.w(TAG, message);
