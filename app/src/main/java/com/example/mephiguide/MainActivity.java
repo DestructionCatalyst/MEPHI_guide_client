@@ -1,9 +1,13 @@
 package com.example.mephiguide;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        MyLog.i("Starting MEPHI guide application, version "+getString(R.string.app_version));
+        MyLog.i("Starting MEPHI guide application, version "+BuildConfig.VERSION_NAME);
 
         selectedTheme = loadTheme();
 
@@ -148,6 +152,19 @@ public class MainActivity extends AppCompatActivity {
         }
         return res;
     }
+
+    public DisplayMetrics getDisplayMetrics(){
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metricsB = new DisplayMetrics();
+        display.getMetrics(metricsB);
+        return metricsB;
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+    }
+
 
     public void reset(){
         MyLog.i("Resetting the application");

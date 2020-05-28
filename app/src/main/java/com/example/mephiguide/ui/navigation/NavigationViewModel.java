@@ -4,16 +4,48 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mephiguide.JSONHelpers.DotJSONHelper;
+import com.example.mephiguide.JSONHelpers.WayJSONHelper;
+import com.example.mephiguide.NetworkTask;
+import com.example.mephiguide.ValueKeeper;
+import com.example.mephiguide.data_types.Dot;
+import com.example.mephiguide.data_types.Way;
+
+import java.util.ArrayList;
+
 public class NavigationViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final String lnkpostDots = "getdots/";
+    private final String lnkpostWays = "getways/";
+
+    private MutableLiveData<ArrayList<Dot>> dotsArrayList;
+    private MutableLiveData<ArrayList<Way>> waysArrayList;
+
+
 
     public NavigationViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is navigation fragment");
+        dotsArrayList = new MutableLiveData<>();
+        waysArrayList = new MutableLiveData<>();
+        updateDots();
+        updateWays();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    LiveData<ArrayList<Dot>> getDots() {
+        return dotsArrayList;
     }
+
+    LiveData<ArrayList<Way>> getWays(){
+        return waysArrayList;
+    }
+
+    private void updateDots(){
+        NetworkTask task = new NetworkTask(dotsArrayList, new DotJSONHelper());
+        task.execute(ValueKeeper.getInstance().lnkbase + lnkpostDots);
+    }
+
+    private void updateWays(){
+        NetworkTask task = new NetworkTask(waysArrayList, new WayJSONHelper());
+        task.execute(ValueKeeper.getInstance().lnkbase + lnkpostWays);
+    }
+
 }

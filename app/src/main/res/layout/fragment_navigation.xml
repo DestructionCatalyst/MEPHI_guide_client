@@ -4,16 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <com.example.mephiguide.ui.LoadErrorMessage.LoadErrorMessage
+        android:id="@+id/navi_lem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/navi_auto_text_from"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/navi_auto_text_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionThreshold="0"
+        android:hint="Откуда..."
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/navi_auto_text_to"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navi_lem" />
+
+    <AutoCompleteTextView
+        android:id="@+id/navi_auto_text_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionThreshold="0"
+        android:hint="Куда..."
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/navi_auto_text_from"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/navi_button"
+         />
+
+
+    <Button
+        android:id="@+id/navi_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Найти путь"
+        app:layout_constraintBottom_toTopOf="@+id/navi_draw_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/navi_auto_text_to" />
+
+
+    <com.example.mephiguide.ui.navigation.MyMapView
+        android:id="@+id/navi_draw_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/navi_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

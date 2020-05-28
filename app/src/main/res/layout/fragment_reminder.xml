@@ -33,7 +33,7 @@
 
     </LinearLayout>
 
-    <com.example.mephiguide.ui.LoadErrorMessage
+    <com.example.mephiguide.ui.LoadErrorMessage.LoadErrorMessage
         android:id="@+id/reminder_lem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

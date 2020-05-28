@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mephiguide.BuildConfig;
 import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.MainActivity;
 import com.example.mephiguide.MyLog;
@@ -68,7 +69,7 @@ public class OptionsFragment extends Fragment {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
         builder1.setMessage("Приложение «Путеводитель по НИЯУ МИФИ»\n" +
-                "Версия " +getString(R.string.app_version)+"\n\n"+
+                "Версия " + BuildConfig.VERSION_NAME +"\n\n"+
                 "©\n" +
                 "Национальный исследовательский ядерный университет «МИФИ»,\n" +
                 "Институт Интеллектуальных Кибернетических Систем (ИИКС)\n" +

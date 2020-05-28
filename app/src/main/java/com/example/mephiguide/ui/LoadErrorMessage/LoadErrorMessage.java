@@ -1,4 +1,4 @@
-package com.example.mephiguide.ui;
+package com.example.mephiguide.ui.LoadErrorMessage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

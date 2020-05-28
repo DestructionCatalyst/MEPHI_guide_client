@@ -18,8 +18,8 @@ import com.example.mephiguide.FileHelper;
 import com.example.mephiguide.MyLog;
 import com.example.mephiguide.R;
 import com.example.mephiguide.data_types.Reminder;
-import com.example.mephiguide.ui.LEMState;
-import com.example.mephiguide.ui.LoadErrorMessage;
+import com.example.mephiguide.ui.LoadErrorMessage.LEMState;
+import com.example.mephiguide.ui.LoadErrorMessage.LoadErrorMessage;
 
 import java.util.ArrayList;
 import java.util.HashSet;

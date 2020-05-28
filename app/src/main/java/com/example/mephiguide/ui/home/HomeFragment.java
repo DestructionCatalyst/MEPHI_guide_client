@@ -24,8 +24,8 @@ import com.example.mephiguide.R;
 import com.example.mephiguide.ValueKeeper;
 import com.example.mephiguide.data_types.Group;
 import com.example.mephiguide.data_types.News;
-import com.example.mephiguide.ui.LEMState;
-import com.example.mephiguide.ui.LoadErrorMessage;
+import com.example.mephiguide.ui.LoadErrorMessage.LoadErrorMessage;
+import com.example.mephiguide.ui.LoadErrorMessage.LoadStateController;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,9 @@ public class HomeFragment extends Fragment {
     private Switch sw;
     private TextView textView;
     private ArrayList<Group> groups;
+
     private LoadErrorMessage lem;
+    private LoadStateController lsc;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,11 +57,11 @@ public class HomeFragment extends Fragment {
             public void onChanged(ArrayList<News> news) {
                 if (news != null) {
                     setNewsAdapter(news);
-                    lem.changeStatus(LEMState.LOAD_FINISHED);
+                    lsc.increaseLevel();
                 }
                 else {
                     MyLog.w("Unable to load news!");
-                    lem.changeStatus(LEMState.LOAD_ERROR);
+                    lsc.showError();
                 }
             }
         });
@@ -69,11 +71,12 @@ public class HomeFragment extends Fragment {
             public void onChanged(ArrayList<Group> groups) {
                 if (groups != null) {
                     setGroupsAdapter(groups);
-                    lem.changeStatus(LEMState.LOAD_FINISHED);
+                    lsc.increaseLevel();
+
                 }
                 else {
-                    lem.changeStatus(LEMState.LOAD_ERROR);
                     MyLog.w("Unable to load groups!");
+                    lsc.showError();
                 }
             }
         });
@@ -90,7 +93,8 @@ public class HomeFragment extends Fragment {
         textView = root.findViewById(R.id.home_textView_forme);
 
         lem = root.findViewById(R.id.home_lem);
-        lem.changeStatus(LEMState.LOAD_PROGRESS);
+        lsc = new LoadStateController(lem, 2);
+
 
         return root;
     }
