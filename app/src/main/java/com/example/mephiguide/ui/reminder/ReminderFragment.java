@@ -76,19 +76,19 @@ public class ReminderFragment extends Fragment {
     }
 
     void setRemindersAdapter(){
-
-        ArrayList show;
-        if (sw.isChecked()) {
-            show = new ArrayList<Reminder>();
-            for (Reminder cur : reminders) {
-                if (!cur.isChecked()) show.add(cur);
+        if(reminders != null) {
+            ArrayList show;
+            if (sw.isChecked()) {
+                show = new ArrayList<Reminder>();
+                for (Reminder cur : reminders) {
+                    if (!cur.isChecked()) show.add(cur);
+                }
+            } else {
+                show = reminders;
             }
+            ReminderAdapter reminderAdapter = new ReminderAdapter(this.getActivity(), this, show);
+            listView.setAdapter(reminderAdapter);
         }
-        else{
-            show = reminders;
-        }
-        ReminderAdapter reminderAdapter = new ReminderAdapter(this.getActivity(), this, show);
-        listView.setAdapter(reminderAdapter);
     }
 
     void saveReminders(){
@@ -122,7 +122,7 @@ public class ReminderFragment extends Fragment {
 
     }
 
-    public boolean getSwitchChecked(){
+    boolean getSwitchChecked(){
         return sw.isChecked();
     }
 
