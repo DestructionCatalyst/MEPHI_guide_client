@@ -10,11 +10,11 @@ public class LoadStateController {
     private OnLoadedListener listener;
 
 
-    public LoadStateController(LoadErrorMessage l, final int MAXLEVEL){
+    public LoadStateController(LoadErrorMessage loadErrorMessage, final int MAXLEVEL){
         loadLevel = 0;
         maxLevel = MAXLEVEL;
-        if (l != null) {
-            lem = l;
+        if (loadErrorMessage != null) {
+            lem = loadErrorMessage;
             lem.changeStatus(LEMState.LOAD_PROGRESS);
         }
     }

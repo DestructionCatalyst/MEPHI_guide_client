@@ -38,4 +38,8 @@ public class Group {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static Group createGuest(){
+        return new Group(0,"(Гость)",0);
+    }
 }

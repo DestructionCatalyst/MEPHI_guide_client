@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mephiguide.IWebUtilities;
 import com.example.mephiguide.JSONHelpers.QrJSONHelper;
 import com.example.mephiguide.NetworkTask;
-import com.example.mephiguide.ValueKeeper;
 import com.example.mephiguide.data_types.Qr;
 
 import java.util.ArrayList;
 
-public class QrViewModel extends ViewModel {
+public class QrViewModel extends ViewModel implements IWebUtilities {
 
     private final String lnkpostQr = "getqr?nam=";
 
@@ -29,7 +29,7 @@ public class QrViewModel extends ViewModel {
     public void updateQr(String prefix){
 
         NetworkTask task = new NetworkTask(qrArrayList, new QrJSONHelper());
-        task.execute(ValueKeeper.getInstance().lnkbase + lnkpostQr + prefix);
+        task.execute(IWebUtilities.linkBase + lnkpostQr + prefix);
 
     }
 

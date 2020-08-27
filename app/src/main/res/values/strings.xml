@@ -2,6 +2,8 @@
     <string name="app_name">Путеводитель по МИФИ</string>
     <string name="app_version">2.0</string>
 
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
 
     <string name="title_home">Новости</string>
     <string name="title_reminder">Памятка</string>
@@ -33,6 +35,7 @@
     сделать, если Вы столкнулись с нестабильной работой приложения. Со стороны разработчика
     подтверждаю, что в файле не содержится никаких Ваших личных данных, лишь информация,
     связанная с работой данного приложения.</string>
+
     <string name="web_start">
         <![CDATA[
         <html>
@@ -47,10 +50,7 @@
         ]]>
     </string>
 
-
-
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
-
+    <string name="link_base">http://194.87.232.95:45555/home/</string>
 
 
 </resources>
