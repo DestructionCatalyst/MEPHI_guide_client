@@ -30,8 +30,6 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private final String FILE_NAME_GROUP = "group";
-    private final String FILE_NAME_AUTO = "autotheme";
     private final String FILE_NAME_CHECK = "checked";
 
     private HomeViewModel homeViewModel;
@@ -53,6 +51,10 @@ public class HomeFragment extends Fragment {
 
         initializeViewModel();
 
+        homeViewModel.updateGroups();
+
+        //updateNews(sw.isChecked());
+        homeViewModel.preLoadNews((MainActivity) getActivity(), sw.isChecked());
 
         return root;
     }
@@ -132,23 +134,17 @@ public class HomeFragment extends Fragment {
         }
         else {
 
-            refreshNews(sw.isChecked());
+            updateNews(sw.isChecked());
             sw.setVisibility(View.VISIBLE);
             textView.setVisibility(View.VISIBLE);
         }
     }
 
-    private void refreshNews(boolean targeting){
+    private void updateNews(boolean targeting){
         MyLog.i("Refreshing news...");
-        if(targeting){
-            homeViewModel.updateNews(homeViewModel.getCurrentGroup().getIdInst());
-        }
-        else{
-            homeViewModel.updateNews(0);
-        }
+
+        homeViewModel.updateNews(targeting);
     }
-
-
 
     private void saveChecked(boolean checked){
         String toWrite = checked ? "true" : "false";
@@ -189,7 +185,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 saveChecked(isChecked);
-                refreshNews(isChecked);
+                updateNews(isChecked);
             }
         });
     }

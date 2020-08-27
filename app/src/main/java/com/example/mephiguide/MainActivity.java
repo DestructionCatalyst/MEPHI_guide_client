@@ -23,12 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private final String FILE_NAME_THEMES = "theme";
     private final String FILE_NAME_AUTO = "autotheme";
 
+    private int preloadedIdInst = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         MyLog.i("Starting MEPHI guide application, version "+BuildConfig.VERSION_NAME);
 
-        selectedTheme = loadTheme();
+        selectedTheme = readTheme();
 
         selectTheme();
 
@@ -77,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         switch (th){
             case 0:
-                setTheme(R.style.AppTheme);
-                break;
             case 1:
                 setTheme(R.style.AppTheme);
                 break;
@@ -92,50 +92,48 @@ public class MainActivity extends AppCompatActivity {
                 setTheme(R.style.IphibTheme);
                 break;
             case 5:
-                setTheme(R.style.NesphiTheme);
-                break;
-            case 6:
-                setTheme(R.style.IcisTheme);
-                break;
-            case 7:
-                setTheme(R.style.IphtiesTheme);
-                break;
-            case 8:
-                setTheme(R.style.IphtiesTheme);
-                break;
             case 9:
                 setTheme(R.style.NesphiTheme);
                 break;
+            case 6:
             case 10:
                 setTheme(R.style.IcisTheme);
                 break;
-
+            case 7:
+            case 8:
+                setTheme(R.style.IphtiesTheme);
+                break;
             default:
                 MyLog.w("Incorrect theme identifier!");
                 setTheme(R.style.AppTheme);
         }
     }
 
-    private int loadTheme(){
+    private int readTheme(){
         MyLog.v("Loading theme");
 
-        FileHelper fhelp = new FileHelper(this);
-        String read = "";
-        read = fhelp.readFile(FILE_NAME_THEMES);
-        int res = 0;
+        if(preloadedIdInst == -1) {
+            FileHelper fhelp = new FileHelper(this);
+            String read = "";
+            read = fhelp.readFile(FILE_NAME_THEMES);
+            int res = 0;
 
-        try {
-            res = Integer.parseInt(read);
+            try {
+                res = Integer.parseInt(read);
+            } catch (NumberFormatException e) {
+                MyLog.w("THEMES file is missing or corrupted!");
+                e.printStackTrace();
+            }
+
+            preloadedIdInst = res;
+            return res;
         }
-        catch (NumberFormatException e){
-            MyLog.w("THEMES file is missing or corrupted!");
-            e.printStackTrace();
-        }
-        return res;
+
+        return preloadedIdInst;
 
     }
 
-    private int readGroup(){
+    public int readGroup(){
         MyLog.v("Loading theme to auto-select");
 
         FileHelper fhelp = new FileHelper(this);
